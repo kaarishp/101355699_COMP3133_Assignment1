@@ -1,0 +1,90 @@
+# Welcome to GraphiQL
+# COMP3133 Assignment 1
+# Kaarish Parameswaran
+
+# Signup Mutation
+
+# mutation {
+#   signup(username: "exampleUser1", email: "fakeuser@example.com", password: "password123") {
+#     _id
+#     username
+#     email
+#   }
+# }
+
+# Login Query 
+
+# query{
+#   login(usernameOrEmail: "exampleUser1", password: "password123"){
+#     username
+#   }
+# }
+
+# Get all employees Query 
+
+# query{
+#   employees{
+#     _id
+#     first_name
+#     last_name
+#     email
+#     gender
+#     salary
+#   }
+# }
+
+# Add New employee Mutation
+
+# mutation{
+#   addEmployee(first_name: "Professor", last_name: "Pritesh", email: "php@gmail.com", 
+#     gender: "Male", salary: 80000.00){
+#     _id
+#     first_name
+#     last_name
+#     email
+#     gender
+#     salary
+#   }
+# }
+
+# Search employee by ID Query
+
+# query{
+#   employee(id: "65c84f20d9b994d9ce90838d"){
+#     first_name
+#     last_name
+#     email
+#     gender
+#     salary
+#   }
+# }
+
+# Update employee by ID Mutation
+  
+# mutation {
+#   updateEmployee(id: "65c84f20d9b994d9ce90838d", 
+#     input: { 
+#     	email: "king@hotmail.com", 
+#     	salary: 50000 }) 
+#   {
+#     _id
+#     first_name
+#     last_name
+#     email
+#     gender
+#     salary
+#   }
+# }
+
+# Delete employee by ID Mutation
+
+# mutation {
+#   deleteEmployee(id: "65c850c8d9b994d9ce908394") {
+#     _id
+#     first_name
+#     last_name
+#     email
+#     gender
+#     salary
+#   }
+# }
