@@ -3,13 +3,12 @@ var { graphqlHTTP } = require('express-graphql');
 var { buildSchema } = require('graphql');
 var mongoose = require('mongoose');
 var { User, Employee } = require('./model');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+require('dotenv').config();
 
 // MongoDB connection
-const DB_HOST = ""
-const DB_USER = ""
-const DB_PASSWORD = ""
-const DB_NAME = ""
-const DB_CONNECTION_STRING = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority` 
+const DB_CONNECTION_STRING = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 mongoose.connect(DB_CONNECTION_STRING, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -88,7 +87,9 @@ var root = {
     if (existingUser) {
       throw new Error('User with this email already exists');
     }
-    const user = new User({ username, email, password });
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const user = new User({ username, email, password: hashedPassword});
     await user.save();
     return user;
   },
@@ -99,7 +100,8 @@ var root = {
     if (!user) {
       throw new Error('User not found');
     }
-    if (user.password !== password) {
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
       throw new Error('Invalid password');
     }
     return user;
